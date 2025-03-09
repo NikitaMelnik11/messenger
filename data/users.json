@@ -1,0 +1,19 @@
+[
+  {
+    "id": "1741535601065",
+    "username": "niki",
+    "fullName": "Никита ",
+    "email": "nik200830@gmail.com",
+    "password": "$2b$10$C1qXZx1SLfdXgCNQqdHYMOcgMrk1JsAiKjF0OsPixKOmb6B/GWWVW",
+    "avatar": "https://randomuser.me/api/portraits/women/2.jpg",
+    "createdAt": "2025-03-09T15:53:21.066Z"
+  },
+  {
+    "id": "1741539236564",
+    "email": "test@example.com",
+    "phone": "+1234567890",
+    "password": "$2b$10$3me0zCvb5NIzo1xy243bOee5mZPweOKneMPD3l5cH1TcUky8B6AQe",
+    "avatar": "https://randomuser.me/api/portraits/women/27.jpg",
+    "createdAt": "2025-03-09T16:53:56.564Z"
+  }
+]

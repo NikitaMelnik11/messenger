@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  # Web service (PHP)
+  web:
+    image: php:8.2-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - PHP_MEMORY_LIMIT=256M
+    restart: always
+
+  # Database service
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vegan_messenger
+      MYSQL_USER: vegan_user
+      MYSQL_PASSWORD: vegan_password
+    restart: always
+
+  # PHPMyAdmin for database management
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  mysql_data: 

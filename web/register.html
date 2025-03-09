@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Vegan Messenger</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/style.css">
+    <style>
+        :root {
+            --primary-color: #00cc8e;
+            --primary-dark: #00a06d;
+            --primary-light: #4dffc7;
+            --secondary-color: #7b5af9;
+            --secondary-dark: #5e42c9;
+            --accent-color: #ffcc29;
+            --text-color: #2D3748;
+            --light-text: #718096;
+            --bg-color: #F7FAFC;
+            --card-bg: #FFFFFF;
+            --border-radius: 12px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 204, 142, 0.9) 0%, rgba(123, 90, 249, 0.8) 100%);
+            z-index: -1;
+        }
+        
+        .dark-mode {
+            --bg-color: #1a202c;
+            --text-color: #e2e8f0;
+            --card-bg: #2d3748;
+            --light-text: #a0aec0;
+        }
+        
+        .toggle-theme {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background: var(--card-bg);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .toggle-theme:hover {
+            transform: translateY(-3px);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        
+        .navbar {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            color: white !important;
+            font-weight: 800;
+            font-size: 1.6rem;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .navbar-brand span {
+            color: var(--accent-color);
+        }
+        
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .navbar-dark .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            transition: var(--transition);
+        }
+        
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn {
+            font-weight: 600;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+        }
+        
+        .register-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            max-width: 550px;
+            width: 100%;
+            margin: 2rem auto;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .register-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .register-header p {
+            color: var(--light-text);
+        }
+        
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-floating .form-control {
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            padding: 1rem 0.75rem;
+            height: calc(3.5rem + 2px);
+            font-size: 1rem;
+        }
+        
+        .form-floating .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(0, 204, 142, 0.25);
+        }
+        
+        .form-floating label {
+            padding: 1rem 0.75rem;
+        }
+        
+        .btn-register {
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--light-text);
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #e2e8f0;
+        }
+        
+        .divider span {
+            padding: 0 1rem;
+        }
+        
+        .social-register {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            color: var(--text-color);
+            padding: 0.8rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .btn-social:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-google {
+            color: #ea4335;
+        }
+        
+        .btn-facebook {
+            color: #3b5998;
+        }
+        
+        .btn-phone {
+            color: var(--primary-color);
+        }
+        
+        .register-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .register-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .register-footer a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .form-check {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .form-check-input {
+            margin-right: 0.5rem;
+            margin-top: 0.4rem;
+            cursor: pointer;
+        }
+        
+        .form-check-label {
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .form-check-label a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .form-check-label a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .register-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 2rem 1rem;
+        }
+        
+        .phone-register-container {
+            display: none;
+        }
+        
+        .phone-register-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .email-register-container.hidden {
+            display: none;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .step {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin: 0 8px;
+            transition: var(--transition);
+        }
+        
+        .step.active {
+            background: var(--primary-color);
+            transform: scale(1.2);
+        }
+        
+        .verification-code {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 2rem 0;
+        }
+        
+        .verification-code input {
+            width: 60px;
+            height: 70px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+        
+        .verification-code input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 0.25rem rgba(0, 204, 142, 0.25);
+        }
+        
+        .verification-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+        
+        .verification-actions a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .verification-actions a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 576px) {
+            .register-card {
+                padding: 1.5rem;
+            }
+            
+            .register-header h2 {
+                font-size: 1.75rem;
+            }
+            
+            .verification-code input {
+                width: 50px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="toggle-theme" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://cdn-icons-png.flaticon.com/512/2153/2153788.png" alt="Vegan Messenger Logo">
+                Vegan<span>Messenger</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Register Section -->
+    <div class="register-container">
+        <div class="register-card">
+            <div class="register-header">
+                <h2>Create Your Account</h2>
+                <p>Join our community of plant-based enthusiasts</p>
+            </div>
+            
+            <!-- Email Registration Form -->
+            <div class="email-register-container" id="email-register-container">
+                <form id="email-register-form">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="full-name" name="fullName" placeholder="Full Name" required>
+                        <label for="full-name">Full Name</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                        <label for="username">Username</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                        <label for="email">Email address</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Confirm Password" required>
+                        <label for="confirm-password">Confirm Password</label>
+                    </div>
+                    
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-register">Create Account</button>
+                </form>
+                
+                <div class="divider">
+                    <span>or sign up with</span>
+                </div>
+                
+                <div class="social-register">
+                    <a href="#" class="btn-social btn-phone" id="phone-register-btn" onclick="showPhoneRegister()">
+                        <i class="fas fa-mobile-alt"></i>
+                        Continue with Phone
+                    </a>
+                    <a href="#" class="btn-social btn-google">
+                        <i class="fab fa-google"></i>
+                        Continue with Google
+                    </a>
+                    <a href="#" class="btn-social btn-facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Continue with Facebook
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Phone Registration Process -->
+            <div class="phone-register-container" id="phone-register-container">
+                <!-- Step 1: Enter Phone Number -->
+                <div id="phone-step-1">
+                    <div class="step-indicator">
+                        <div class="step active"></div>
+                        <div class="step"></div>
+                        <div class="step"></div>
+                    </div>
+                    
+                    <h3 class="text-center mb-4">Enter Your Phone Number</h3>
+                    
+                    <div class="form-floating">
+                        <input type="tel" class="form-control" id="phone-number" placeholder="Phone Number" required>
+                        <label for="phone-number">Phone Number</label>
+                    </div>
+                    
+                    <p class="text-muted small text-center mb-4">We'll send a verification code to this number</p>
+                    
+                    <button type="button" class="btn btn-primary btn-register" onclick="sendVerificationCode()">Send Verification Code</button>
+                    
+                    <div class="text-center mt-4">
+                        <a href="#" onclick="backToEmailRegister(); return false;">Back to Email Registration</a>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Verify Code -->
+                <div id="phone-step-2" style="display: none;">
+                    <div class="step-indicator">
+                        <div class="step active"></div>
+                        <div class="step active"></div>
+                        <div class="step"></div>
+                    </div>
+                    
+                    <h3 class="text-center mb-3">Verify Your Phone</h3>
+                    <p class="text-center text-muted">We've sent a verification code to your phone number</p>
+                    
+                    <div class="verification-code">
+                        <input type="text" maxlength="1" id="code-1" onkeyup="moveToNext(this, 'code-2')">
+                        <input type="text" maxlength="1" id="code-2" onkeyup="moveToNext(this, 'code-3')">
+                        <input type="text" maxlength="1" id="code-3" onkeyup="moveToNext(this, 'code-4')">
+                        <input type="text" maxlength="1" id="code-4" onkeyup="moveToNext(this, 'verify-btn')">
+                    </div>
+                    
+                    <div class="verification-actions">
+                        <a href="#" onclick="resendCode(); return false;">Resend Code</a>
+                        <a href="#" onclick="changePhoneNumber(); return false;">Change Phone Number</a>
+                    </div>
+                    
+                    <button type="button" id="verify-btn" class="btn btn-primary btn-register" onclick="verifyCode()">Verify Code</button>
+                </div>
+                
+                <!-- Step 3: Complete Profile -->
+                <div id="phone-step-3" style="display: none;">
+                    <div class="step-indicator">
+                        <div class="step active"></div>
+                        <div class="step active"></div>
+                        <div class="step active"></div>
+                    </div>
+                    
+                    <h3 class="text-center mb-4">Complete Your Profile</h3>
+                    
+                    <form id="phone-register-form">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="phone-full-name" placeholder="Full Name" required>
+                            <label for="phone-full-name">Full Name</label>
+                        </div>
+                        
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="phone-username" placeholder="Username">
+                            <label for="phone-username">Username (optional)</label>
+                        </div>
+                        
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="phone-terms" required>
+                            <label class="form-check-label" for="phone-terms">
+                                I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-register">Complete Registration</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="register-footer">
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailRegisterForm = document.getElementById('email-register-form');
+            const phoneRegisterForm = document.getElementById('phone-register-form');
+            
+            // Handle email registration form submission
+            emailRegisterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const fullName = document.getElementById('full-name').value.trim();
+                const username = document.getElementById('username').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                
+                if (!fullName || !username || !email || !password || !confirmPassword) {
+                    showAlert('All fields are required', 'danger');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    showAlert('Passwords do not match', 'danger');
+                    return;
+                }
+                
+                if (!validateEmail(email)) {
+                    showAlert('Please enter a valid email address', 'danger');
+                    return;
+                }
+                
+                // Send registration request
+                fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username,
+                        fullName,
+                        email,
+                        password
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Store session token
+                        if (data.token) {
+                            localStorage.setItem('authToken', data.token);
+                        }
+                        
+                        // Redirect to messenger
+                        window.location.href = 'messenger.html';
+                    } else {
+                        showAlert(data.message || 'Registration failed. Please try again.', 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('Registration error:', error);
+                    showAlert('An error occurred during registration. Please try again.', 'danger');
+                });
+            });
+            
+            // Handle phone registration form submission
+            phoneRegisterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const fullName = document.getElementById('phone-full-name').value;
+                const username = document.getElementById('phone-username').value;
+                const phoneNumber = document.getElementById('phone-number').value;
+                
+                // Send registration request
+                fetch('/api/auth/register/phone', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fullName,
+                        username,
+                        phone: phoneNumber
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Store session token
+                        if (data.token) {
+                            localStorage.setItem('authToken', data.token);
+                        }
+                        
+                        // Redirect to messenger
+                        window.location.href = 'messenger.html';
+                    } else {
+                        showAlert(data.message || 'Registration failed. Please try again.', 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('Registration error:', error);
+                    showAlert('An error occurred during registration. Please try again.', 'danger');
+                });
+            });
+        });
+        
+        // Show phone registration form
+        function showPhoneRegister() {
+            document.getElementById('email-register-container').classList.add('hidden');
+            document.getElementById('phone-register-container').classList.add('active');
+        }
+        
+        // Back to email registration
+        function backToEmailRegister() {
+            document.getElementById('email-register-container').classList.remove('hidden');
+            document.getElementById('phone-register-container').classList.remove('active');
+        }
+        
+        // Send verification code
+        function sendVerificationCode() {
+            const phoneNumber = document.getElementById('phone-number').value;
+            
+            // Validate phone number
+            if (!phoneNumber || phoneNumber.length < 10) {
+                showAlert('Please enter a valid phone number', 'danger');
+                return;
+            }
+            
+            // In a real app, you would send an API request to send the verification code
+            // Here we'll just simulate it
+            
+            document.getElementById('phone-step-1').style.display = 'none';
+            document.getElementById('phone-step-2').style.display = 'block';
+            
+            // Focus on first input
+            document.getElementById('code-1').focus();
+        }
+        
+        // Move to next input field when typing verification code
+        function moveToNext(currentInput, nextInputId) {
+            if (currentInput.value.length >= currentInput.maxLength) {
+                if (nextInputId === 'verify-btn') {
+                    document.getElementById(nextInputId).focus();
+                } else {
+                    document.getElementById(nextInputId).focus();
+                }
+            }
+        }
+        
+        // Verify the code
+        function verifyCode() {
+            const code1 = document.getElementById('code-1').value;
+            const code2 = document.getElementById('code-2').value;
+            const code3 = document.getElementById('code-3').value;
+            const code4 = document.getElementById('code-4').value;
+            
+            const code = code1 + code2 + code3 + code4;
+            
+            // Validate code
+            if (code.length !== 4) {
+                showAlert('Please enter the full verification code', 'danger');
+                return;
+            }
+            
+            // In a real app, you would send an API request to verify the code
+            // Here we'll just simulate a successful verification
+            
+            // Move to step 3
+            document.getElementById('phone-step-2').style.display = 'none';
+            document.getElementById('phone-step-3').style.display = 'block';
+        }
+        
+        // Resend verification code
+        function resendCode() {
+            showAlert('Verification code resent!', 'success');
+        }
+        
+        // Change phone number
+        function changePhoneNumber() {
+            document.getElementById('phone-step-1').style.display = 'block';
+            document.getElementById('phone-step-2').style.display = 'none';
+        }
+        
+        function showAlert(message, type) {
+            // Remove any existing alerts
+            const existingAlerts = document.querySelectorAll('.alert');
+            existingAlerts.forEach(alert => alert.remove());
+            
+            // Create new alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show mt-3`;
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            // Find the active form container
+            let container;
+            if (document.getElementById('email-register-container').classList.contains('hidden')) {
+                // Phone registration is active
+                const activeStep = document.querySelector('#phone-register-container > div[style="display: block"]') || 
+                                  document.querySelector('#phone-register-container > div:not([style="display: none"])');
+                container = activeStep;
+            } else {
+                // Email registration is active
+                container = document.getElementById('email-register-form');
+            }
+            
+            // Insert alert before the form or at the top of the active step
+            container.parentNode.insertBefore(alertDiv, container);
+            
+            // Auto dismiss after 5 seconds
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alertDiv);
+                bsAlert.close();
+            }, 5000);
+        }
+        
+        function validateEmail(email) {
+            const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html> 

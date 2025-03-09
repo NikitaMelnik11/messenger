@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#00cc8e">
+    <title>Нет подключения - Vegan Messenger</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00cc8e;
+            --primary-dark: #00a06d;
+            --primary-light: #e6f7f2;
+            --text-color: #2d3748;
+            --light-text: #718096;
+            --body-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Темная тема */
+        [data-theme="dark"] {
+            --primary-color: #00cc8e;
+            --primary-dark: #00a06d;
+            --primary-light: #193330;
+            --text-color: #f7fafc;
+            --light-text: #a0aec0;
+            --body-bg: #121212;
+            --card-bg: #1e1e1e;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .offline-container {
+            text-align: center;
+            max-width: 500px;
+            padding: 40px 20px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .offline-icon {
+            font-size: 80px;
+            color: var(--light-text);
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        p {
+            color: var(--light-text);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 204, 142, 0.3);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 204, 142, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            box-shadow: none;
+            margin-left: 10px;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-light);
+            box-shadow: none;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            width: 150px;
+            margin: 15px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 30px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .feature-desc {
+            font-size: 0.85rem;
+            color: var(--light-text);
+        }
+        
+        /* Переключатель темы */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+        }
+        
+        .theme-toggle i {
+            color: var(--text-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Отзывчивый дизайн */
+        @media (max-width: 576px) {
+            .offline-icon {
+                font-size: 60px;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .features {
+                margin-top: 20px;
+            }
+            
+            .feature {
+                width: 130px;
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" id="theme-toggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="offline-container">
+        <div class="offline-icon">
+            <i class="fas fa-wifi-slash"></i>
+        </div>
+        
+        <h1>Нет подключения к интернету</h1>
+        <p>
+            Похоже, вы не подключены к интернету. 
+            Vegan Messenger работает в офлайн-режиме, но некоторые функции могут быть недоступны.
+            Ваши сообщения будут отправлены автоматически, когда соединение восстановится.
+        </p>
+        
+        <button class="btn" id="retry-button">Повторить подключение</button>
+        <button class="btn btn-outline" id="offline-mode">Продолжить офлайн</button>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <div class="feature-title">История чатов</div>
+                <div class="feature-desc">Просматривайте историю сообщений</div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="feature-title">Отправка</div>
+                <div class="feature-desc">Создавайте сообщения офлайн</div>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-sync"></i>
+                </div>
+                <div class="feature-title">Синхронизация</div>
+                <div class="feature-desc">Автоматическая отправка</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Проверка состояния сети
+        function checkConnection() {
+            if (navigator.onLine) {
+                // Если подключение восстановлено, перенаправляем на главную страницу
+                window.location.href = '/';
+            }
+        }
+        
+        // Обработчик кнопки повторного подключения
+        document.getElementById('retry-button').addEventListener('click', function() {
+            checkConnection();
+            if (!navigator.onLine) {
+                alert('Подключение к интернету все еще отсутствует. Пожалуйста, проверьте ваше соединение.');
+            }
+        });
+        
+        // Обработчик кнопки продолжения в офлайн-режиме
+        document.getElementById('offline-mode').addEventListener('click', function() {
+            // Проверяем, есть ли кэшированная версия приложения в Service Worker
+            if ('caches' in window) {
+                caches.match('/').then(function(response) {
+                    if (response) {
+                        window.location.href = '/';
+                    } else {
+                        alert('Кэшированная версия приложения недоступна. Необходимо подключение к интернету.');
+                    }
+                });
+            } else {
+                alert('Ваш браузер не поддерживает кэширование. Необходимо подключение к интернету.');
+            }
+        });
+        
+        // Слушаем изменения сетевого подключения
+        window.addEventListener('online', checkConnection);
+        
+        // Проверяем состояние подключения при загрузке
+        window.addEventListener('load', checkConnection);
+        
+        // Переключение темной/светлой темы
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        // Проверяем сохраненную тему
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            document.body.removeAttribute('data-theme');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+        
+        // Обработчик для переключения темы
+        themeToggle.addEventListener('click', function() {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+    </script>
+</body>
+</html> 
